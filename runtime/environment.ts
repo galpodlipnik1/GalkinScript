@@ -20,7 +20,16 @@ export default class Environment {
   }
 
   public assignVar (varname: string, value: RuntimeVal): RuntimeVal {
-  
+    const env = this.resolve(varname);
+    env.variables.set(varname, value);
+
+    return value;
+  }
+
+  public lookupVar (varname: string): RuntimeVal {
+    const env = this.resolve(varname);
+
+    return env.variables.get(varname) as RuntimeVal;
   }
 
   public resolve (varname: string): Environment {
@@ -32,4 +41,5 @@ export default class Environment {
     
     return this.parent.resolve(varname);
   }
+
 }
